@@ -15,24 +15,6 @@ def get_cnn_model():
     return cnn_model
 
 
-class cross_attention_block(nn.Module):
-    def __init__(self, ):
-        super().__init__()
-        self.satt_cross1 = nn.MultiheadAttention(100, num_heads=2)
-        self.satt_cross2 = nn.MultiheadAttention(100, num_heads=2)
-        self.fc = nn.Linear(200, 100)
-        self.flatten = nn.Flatten()
-
-    def forward(self, x, y):
-        x_y = self.satt_cross1(x, y, x)[0]
-        y_x = self.satt_cross2(y, x, y)[0]
-        x_y = self.flatten(x_y)
-        y_x = self.flatten(y_x)
-        cross_xy = torch.cat([x_y, y_x], dim=1)
-        cross_xy = self.fc(cross_xy)
-        return cross_xy
-
-
 class bigModel(nn.Module):
     def __init__(self, cnn_model):
         super().__init__()
