@@ -76,13 +76,8 @@ def main():
     n_class = 4
     device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     print(f"Using {device} device")
-    # cnn_model = CNNModel().to(device)
     cnn_model = get_cnn_model().to(device)
     print(cnn_model(b_img.to(device)).shape)
-    dnn_block = DNNModel().to(device)
-    print(dnn_block(b_x.to(device)).shape)
-    eg_tensor = torch.rand(2, 10, 100)
-    print(FNet(100, 2, 10)(eg_tensor).shape)
     big_model = bigModel(cnn_model).to(device)
     print(big_model(b_x.to(device), b_img.to(device), b_img_pet.to(device), flag).shape)
 
